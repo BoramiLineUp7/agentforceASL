@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
+<script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'fr'; // For example, enter 'en' or 'en-US'
+
+			embeddedservice_bootstrap.init(
+				'00DKI000000LHlb',
+				'ASL_AgentForce_Chatbot',
+				'https://aslairlinesfrance--devlu7.sandbox.my.site.com/ESWASLAgentForceChatbot1756370491200',
+				{
+					scrt2URL: 'https://aslairlinesfrance--devlu7.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://aslairlinesfrance--devlu7.sandbox.my.site.com/ESWASLAgentForceChatbot1756370491200/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
