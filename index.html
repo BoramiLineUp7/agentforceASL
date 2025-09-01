@@ -1,111 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page de test</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans"; margin: 0; padding: 2rem; line-height: 1.5; }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1, h2 { margin: 0 0 .5rem; }
-    .muted { opacity: .8; font-size: .9rem; }
-    .card { border: 1px solid rgba(0,0,0,.15); border-radius: .75rem; padding: 1rem; margin: 1rem 0; }
-    .row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-    button { padding: .6rem 1rem; border-radius: .5rem; border: 1px solid #999; background: #eee; cursor: pointer; }
-    button:hover { filter: brightness(0.97); }
-    input[type="text"] { padding: .5rem .75rem; border-radius: .5rem; border: 1px solid #999; min-width: 220px; }
-    code, pre { background: rgba(0,0,0,.05); padding: .2rem .4rem; border-radius: .25rem; }
-    pre { white-space: pre-wrap; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Page HTML Basique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #45a049;
+        }
+        footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Page de test</h1>
-    <p class="muted">Dernière mise à jour&nbsp;: <span id="ts"></span></p>
+    <header>
+        <h1>Bienvenue sur ma page web</h1>
+    </header>
 
-    <div class="card">
-      <h2>Interactions</h2>
-      <div class="row">
-        <button id="btn">Cliquez-moi</button>
-        <span>Compteur&nbsp;: <strong id="count">0</strong></span>
-      </div>
-      <div class="row">
-        <label for="name">Votre nom&nbsp;:</label>
-        <input id="name" type="text" placeholder="Entrez un nom">
-        <button id="greet">Dire bonjour</button>
-      </div>
-      <p id="message"></p>
-    </div>
+    <nav>
+        <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#apropos">À propos</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-    <div class="card">
-      <h2>Infos navigateur</h2>
-      <ul>
-        <li>User agent&nbsp;: <code id="ua"></code></li>
-        <li>Langue&nbsp;: <code id="lang"></code></li>
-        <li>En ligne&nbsp;: <code id="online"></code></li>
-      </ul>
-    </div>
+    <main>
+        <section id="accueil">
+            <h2>Accueil</h2>
+            <p>Ceci est une page HTML basique qui démontre la structure fondamentale d'un site web. Elle contient tous les éléments essentiels d'une page web moderne.</p>
+        </section>
 
-    <div class="card">
-      <h2>Console</h2>
-      <p class="muted">Ouvrez la console du navigateur pour voir les logs.</p>
-      <pre id="log"></pre>
-    </div>
-  </div>
+        <section id="apropos">
+            <h2>À propos</h2>
+            <p>Cette page illustre les concepts de base du HTML5 avec :</p>
+            <ul>
+                <li>Une structure sémantique</li>
+                <li>Un style CSS intégré</li>
+                <li>Une navigation simple</li>
+                <li>Du contenu organisé</li>
+            </ul>
+        </section>
 
-  <script>
-    (function () {
-      const ts = document.getElementById('ts');
-      const btn = document.getElementById('btn');
-      const countEl = document.getElementById('count');
-      const greetBtn = document.getElementById('greet');
-      const nameInput = document.getElementById('name');
-      const message = document.getElementById('message');
-      const ua = document.getElementById('ua');
-      const lang = document.getElementById('lang');
-      const online = document.getElementById('online');
-      const log = document.getElementById('log');
+        <section id="services">
+            <h2>Services</h2>
+            <p>Voici quelques exemples de services :</p>
+            <ol>
+                <li>Développement web</li>
+                <li>Design graphique</li>
+                <li>Consultation technique</li>
+            </ol>
+        </section>
 
-      let count = 0;
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>Pour me contacter :</p>
+            <p>Email : <a href="mailto:example@email.com">example@email.com</a></p>
+            <p>Téléphone : +33 1 23 45 67 89</p>
+        </section>
+    </main>
 
-      function logLine(text) {
-        const line = '[' + new Date().toLocaleTimeString() + '] ' + text + '\n';
-        log.textContent += line;
-        console.log(text);
-      }
-
-      function refreshEnv() {
-        ua.textContent = navigator.userAgent;
-        lang.textContent = navigator.language || (navigator.languages && navigator.languages[0]) || 'n/a';
-        online.textContent = navigator.onLine ? 'oui' : 'non';
-      }
-
-      document.addEventListener('visibilitychange', () => {
-        logLine('visibilitychange: ' + document.visibilityState);
-      });
-
-      window.addEventListener('online', () => { refreshEnv(); logLine('Vous êtes en ligne'); });
-      window.addEventListener('offline', () => { refreshEnv(); logLine('Vous êtes hors ligne'); });
-
-      ts.textContent = new Date().toLocaleString();
-
-      btn.addEventListener('click', () => {
-        count += 1;
-        countEl.textContent = String(count);
-        logLine('Bouton cliqué (' + count + ')');
-      });
-
-      greetBtn.addEventListener('click', () => {
-        const v = nameInput.value.trim();
-        const txt = v ? 'Bonjour, ' + v + ' !' : 'Bonjour !';
-        message.textContent = txt;
-        logLine('Message affiché: ' + txt);
-      });
-
-      refreshEnv();
-      logLine('Page de test chargée');
-    })();
-  </script>
+    <footer>
+        <p>&copy; 2024 Ma Page Web. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>
