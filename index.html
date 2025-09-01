@@ -1,1 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page de test</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans"; margin: 0; padding: 2rem; line-height: 1.5; }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1, h2 { margin: 0 0 .5rem; }
+    .muted { opacity: .8; font-size: .9rem; }
+    .card { border: 1px solid rgba(0,0,0,.15); border-radius: .75rem; padding: 1rem; margin: 1rem 0; }
+    .row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    button { padding: .6rem 1rem; border-radius: .5rem; border: 1px solid #999; background: #eee; cursor: pointer; }
+    button:hover { filter: brightness(0.97); }
+    input[type="text"] { padding: .5rem .75rem; border-radius: .5rem; border: 1px solid #999; min-width: 220px; }
+    code, pre { background: rgba(0,0,0,.05); padding: .2rem .4rem; border-radius: .25rem; }
+    pre { white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Page de test</h1>
+    <p class="muted">Dernière mise à jour&nbsp;: <span id="ts"></span></p>
 
+    <div class="card">
+      <h2>Interactions</h2>
+      <div class="row">
+        <button id="btn">Cliquez-moi</button>
+        <span>Compteur&nbsp;: <strong id="count">0</strong></span>
+      </div>
+      <div class="row">
+        <label for="name">Votre nom&nbsp;:</label>
+        <input id="name" type="text" placeholder="Entrez un nom">
+        <button id="greet">Dire bonjour</button>
+      </div>
+      <p id="message"></p>
+    </div>
+
+    <div class="card">
+      <h2>Infos navigateur</h2>
+      <ul>
+        <li>User agent&nbsp;: <code id="ua"></code></li>
+        <li>Langue&nbsp;: <code id="lang"></code></li>
+        <li>En ligne&nbsp;: <code id="online"></code></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Console</h2>
+      <p class="muted">Ouvrez la console du navigateur pour voir les logs.</p>
+      <pre id="log"></pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const ts = document.getElementById('ts');
+      const btn = document.getElementById('btn');
+      const countEl = document.getElementById('count');
+      const greetBtn = document.getElementById('greet');
+      const nameInput = document.getElementById('name');
+      const message = document.getElementById('message');
+      const ua = document.getElementById('ua');
+      const lang = document.getElementById('lang');
+      const online = document.getElementById('online');
+      const log = document.getElementById('log');
+
+      let count = 0;
+
+      function logLine(text) {
+        const line = '[' + new Date().toLocaleTimeString() + '] ' + text + '\n';
+        log.textContent += line;
+        console.log(text);
+      }
+
+      function refreshEnv() {
+        ua.textContent = navigator.userAgent;
+        lang.textContent = navigator.language || (navigator.languages && navigator.languages[0]) || 'n/a';
+        online.textContent = navigator.onLine ? 'oui' : 'non';
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        logLine('visibilitychange: ' + document.visibilityState);
+      });
+
+      window.addEventListener('online', () => { refreshEnv(); logLine('Vous êtes en ligne'); });
+      window.addEventListener('offline', () => { refreshEnv(); logLine('Vous êtes hors ligne'); });
+
+      ts.textContent = new Date().toLocaleString();
+
+      btn.addEventListener('click', () => {
+        count += 1;
+        countEl.textContent = String(count);
+        logLine('Bouton cliqué (' + count + ')');
+      });
+
+      greetBtn.addEventListener('click', () => {
+        const v = nameInput.value.trim();
+        const txt = v ? 'Bonjour, ' + v + ' !' : 'Bonjour !';
+        message.textContent = txt;
+        logLine('Message affiché: ' + txt);
+      });
+
+      refreshEnv();
+      logLine('Page de test chargée');
+    })();
+  </script>
+</body>
+</html>
