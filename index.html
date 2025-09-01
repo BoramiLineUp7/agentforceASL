@@ -261,6 +261,26 @@
     </style>
 </head>
 <body>
+    <script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'fr'; // For example, enter 'en' or 'en-US'
+
+			embeddedservice_bootstrap.init(
+				'00DKI000000LHlb',
+				'GitHub_Messaging_Setting',
+				'https://aslairlinesfrance--devlu7.sandbox.my.site.com/ESWGitHubMessagingSetti1756714313747',
+				{
+					scrt2URL: 'https://aslairlinesfrance--devlu7.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://aslairlinesfrance--devlu7.sandbox.my.site.com/ESWGitHubMessagingSetti1756714313747/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
     <header class="header">
         <div class="container">
             <h1><i class="fas fa-headset"></i> Centre de Support</h1>
