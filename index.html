@@ -1,121 +1,432 @@
 <!DOCTYPE html>
 <html lang="fr">
-<script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'fr'; // For example, enter 'en' or 'en-US'
-
-			embeddedservice_bootstrap.init(
-				'00DKI000000LHlb',
-				'ASL_AgentForce_Chatbot',
-				'https://aslairlinesfrance--devlu7.sandbox.my.site.com/ESWASLAgentForceChatbot1756370491200',
-				{
-					scrt2URL: 'https://aslairlinesfrance--devlu7.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-<script type='text/javascript' src='https://aslairlinesfrance--devlu7.sandbox.my.site.com/ESWASLAgentForceChatbot1756370491200/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Page HTML Basique</title>
+    <title>Support Client - Service Cloud Demo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            background-color: #f8f9fa;
             color: #333;
         }
-        header {
-            background-color: #4CAF50;
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             color: white;
+            padding: 2rem 0;
             text-align: center;
-            padding: 1rem;
-            border-radius: 5px;
         }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
-        nav ul li a {
-            text-decoration: none;
-            color: #4CAF50;
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .support-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .support-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
             font-weight: bold;
+            margin-bottom: 1rem;
+            color: #1e3a8a;
         }
-        nav ul li a:hover {
-            color: #45a049;
+
+        .card-description {
+            margin-bottom: 1.5rem;
+            color: #666;
         }
-        footer {
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 10px;
-            margin-top: 20px;
+
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #1e40af;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #3b82f6;
+            border: 2px solid #3b82f6;
+        }
+
+        .btn-outline:hover {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar h3 {
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .status-green { background-color: #10b981; }
+        .status-orange { background-color: #f59e0b; }
+        .status-red { background-color: #ef4444; }
+
+        .contact-form {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .knowledge-base {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .kb-item {
+            padding: 1rem;
+            border-left: 3px solid #3b82f6;
+            margin-bottom: 1rem;
+            background-color: #f8fafc;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .kb-item h4 {
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .kb-item a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .kb-item a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            background-color: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .alert-info {
+            background-color: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+
+        .alert-success {
+            background-color: #d1fae5;
+            border-left-color: #10b981;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .support-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Bienvenue sur ma page web</h1>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-headset"></i> Centre de Support</h1>
+            <p>Service Cloud Salesforce - Comment pouvons-nous vous aider aujourd'hui ?</p>
+        </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#apropos">À propos</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    <div class="container main-content">
+        <main>
+            <div class="alert alert-info">
+                <strong><i class="fas fa-info-circle"></i> Information :</strong>
+                Temps de réponse moyen actuel : 2 heures. Nos agents sont disponibles 24h/7j.
+            </div>
 
-    <main>
-        <section id="accueil">
-            <h2>Accueil</h2>
-            <p>Ceci est une page HTML basique qui démontre la structure fondamentale d'un site web. Elle contient tous les éléments essentiels d'une page web moderne.</p>
-        </section>
+            <section class="support-options">
+                <div class="support-card">
+                    <div class="card-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="card-title">Chat en Direct</h3>
+                    <p class="card-description">
+                        Discutez instantanément avec un de nos agents. 
+                        Résolution rapide pour vos questions urgentes.
+                    </p>
+                    <button class="btn" onclick="startChat()">
+                        <i class="fas fa-play"></i> Démarrer le Chat
+                    </button>
+                </div>
 
-        <section id="apropos">
-            <h2>À propos</h2>
-            <p>Cette page illustre les concepts de base du HTML5 avec :</p>
-            <ul>
-                <li>Une structure sémantique</li>
-                <li>Un style CSS intégré</li>
-                <li>Une navigation simple</li>
-                <li>Du contenu organisé</li>
-            </ul>
-        </section>
+                <div class="support-card">
+                    <div class="card-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="card-title">Support Téléphonique</h3>
+                    <p class="card-description">
+                        Appelez-nous directement pour une assistance personnalisée.
+                        Disponible 24h/7j.
+                    </p>
+                    <a href="tel:+33123456789" class="btn">
+                        <i class="fas fa-phone"></i> Appeler Maintenant
+                    </a>
+                </div>
 
-        <section id="services">
-            <h2>Services</h2>
-            <p>Voici quelques exemples de services :</p>
-            <ol>
-                <li>Développement web</li>
-                <li>Design graphique</li>
-                <li>Consultation technique</li>
-            </ol>
-        </section>
+                <div class="support-card">
+                    <div class="card-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="card-title">Créer un Ticket</h3>
+                    <p class="card-description">
+                        Soumettez une demande détaillée. Parfait pour les problèmes complexes nécessitant une investigation.
+                    </p>
+                    <button class="btn" onclick="toggleTicketForm()">
+                        <i class="fas fa-plus"></i> Nouveau Ticket
+                    </button>
+                </div>
 
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Pour me contacter :</p>
-            <p>Email : <a href="mailto:example@email.com">example@email.com</a></p>
-            <p>Téléphone : +33 1 23 45 67 89</p>
-        </section>
-    </main>
+                <div class="support-card">
+                    <div class="card-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="card-title">Base de Connaissances</h3>
+                    <p class="card-description">
+                        Consultez nos articles d'aide et tutoriels pour résoudre vos problèmes par vous-même.
+                    </p>
+                    <a href="#knowledge-base" class="btn btn-outline">
+                        <i class="fas fa-search"></i> Parcourir
+                    </a>
+                </div>
+            </section>
 
-    <footer>
-        <p>&copy; 2024 Ma Page Web. Tous droits réservés.</p>
-    </footer>
-</body>
-</html>
+            <section class="contact-form" id="ticket-form" style="display: none;">
+                <h3><i class="fas fa-ticket-alt"></i> Créer un Nouveau Ticket</h3>
+                <form id="supportForm">
+                    <div class="form-group">
+                        <label for="name">Nom Complet *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priority">Priorité</label>
+                        <select id="priority" name="priority">
+                            <option value="low">Faible</option>
+                            <option value="medium" selected>Moyenne</option>
+                            <option value="high">Élevée</option>
+                            <option value="urgent">Urgente</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Catégorie</label>
+                        <select id="category" name="category">
+                            <option value="technical">Support Technique</option>
+                            <option value="billing">Facturation</option>
+                            <option value="account">Gestion de Compte</option>
+                            <option value="feature">Demande de Fonctionnalité</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Sujet *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description du Problème *</label>
+                        <textarea id="description" name="description" 
+                                placeholder="Décrivez votre problème en détail..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        <i class="fas fa-paper-plane"></i> Envoyer le Ticket
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="toggleTicketForm()" style="margin-left: 1rem;">
+                        Annuler
+                    </button>
+                </form>
+            </section>
+
+            <section class="knowledge-base" id="knowledge-base">
+                <h3><i class="fas fa-lightbulb"></i> Articles Populaires</h3>
+                
+                <div class="kb-item">
+                    <h4>Comment réinitialiser mon mot de passe ?</h4>
+                    <p>Guide étape par étape pour récupérer l'accès à votre compte.</p>
+                    <a href="#">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="kb-item">
+                    <h4>Configuration de l'authentification à deux facteurs</h4>
+                    <p>Sécurisez votre compte avec la vérification en deux étapes.</p>
+                    <a href="#">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="kb-item">
+                    <h4>Comprendre votre facturation</h4>
+                    <p>Explications détaillées sur les éléments de votre facture.</p>
+                    <a href="#">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="kb-item">
+                    <h4>Guide de démarrage rapide</h4>
+                    <p>Premiers pas avec notre plateforme.</p>
+                    <a href="#">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <h3><i class="fas fa-chart-line"></i> État des Services</h3>
+            
+            <div class="status-item">
+                <span>API Principal</span>
+                <span class="status-indicator status-green"></span>
+            </div>
+            
+            <div class="status-item">
+                <span>Base de Données</span>
+                <span class="status-indicator status-green"></span>
+            </div>
+            
+            <div class="status-item">
+                <span>Service de Messagerie</span>
+                <span class
